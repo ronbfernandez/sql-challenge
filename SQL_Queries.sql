@@ -1,78 +1,9 @@
--------------------------------------------------------------------------------------
---Part 1: DATA MODELING
--------------------------------------------------------------------------------------
---Inspect the CSVs and sketch out an ERD of the tables.
-
-----Please see link to my schema: https://app.quickdatabasediagrams.com/#/d/5apW6U
---(schema diagram PNG file also available in EmployeeSQL Folder)
-
-
--------------------------------------------------------------------------------------
---Part 2: DATA ENGINEERING / SCHEMATA 
--------------------------------------------------------------------------------------
---Use the information you have to create a table schema for each of the six CSV files. 
---Remember to specify data types, primary keys, foreign keys, and other constraints.
---Be sure to create tables in the correct order to handle foreign keys.
---Import each CSV file into the corresponding SQL table.
-
-
-CREATE TABLE titles (
-	"title_id" VARCHAR NOT NULL,
-    "title" VARCHAR NOT NULL,
-	PRIMARY KEY (title_id)
-);
-
 SELECT * FROM titles;
-
-CREATE TABLE employees (
-	"emp_no" INT NOT NULL,
-	"emp_title_id" VARCHAR NOT NULL,
-    "birth_date" DATE NOT NULL,
-	"first_name" VARCHAR NOT NULL,
-	"last_name" VARCHAR NOT NULL,
-	"gender" VARCHAR NOT NULL,
-	"hire_date" DATE NOT NULL,
-	PRIMARY KEY (emp_no),
-	FOREIGN KEY (emp_title_id) REFERENCES titles (title_id)
-);
-
 SELECT * FROM employees;
-
-CREATE TABLE salaries (
-	"emp_no" INT NOT NULL,
-    "salary" INT NOT NULL,
-	FOREIGN KEY (emp_no) REFERENCES employees (emp_no)
-);
-
 SELECT * FROM salaries;
-
-CREATE TABLE departments (
-	"dept_no" VARCHAR NOT NULL,
-    "dept_name" VARCHAR NOT NULL,
-    PRIMARY KEY (dept_no)
-);
-
 SELECT * FROM departments;
-
-CREATE TABLE dept_emp (
-	"emp_no" INT NOT NULL,
-    "dept_no" VARCHAR NOT NULL,
-	FOREIGN KEY (emp_no) REFERENCES employees (emp_no),
-	FOREIGN KEY (dept_no) REFERENCES departments (dept_no)
-);
-
-Select * FROM dept_emp;
-
-CREATE TABLE dept_manager (
-	"dept_no" VARCHAR NOT NULL,
-    "emp_no" INT NOT NULL,
-	FOREIGN KEY (dept_no) REFERENCES departments (dept_no),
-	FOREIGN KEY (emp_no) REFERENCES employees (emp_no)
-);
-
+SELECT * FROM dept_emp;
 SELECT * FROM dept_manager;
-
-
 
 
 ------------------------------------------------------------------------------------------
@@ -131,5 +62,3 @@ SELECT last_name,
 COUNT(last_name) AS "frequency"
 FROM employees GROUP BY last_name 
 ORDER BY COUNT(last_name) DESC;
-
-
